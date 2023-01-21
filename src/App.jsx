@@ -9,6 +9,8 @@ import List from "./components/List";
 export default function App(){
     const [value, setValue] = useState([])
     const [inputValue, setInputValue] = useState('')
+
+
     function showText(event){
         const date = new Date()
         let {value, name} = event.target.previousSibling
@@ -19,9 +21,13 @@ export default function App(){
         setInputValue('')
         event.target.previousSibling.focus()
     }
+
+
     function updateText(event) {
         setInputValue(event.target.value)
     }
+
+
     function deleteItem(event) {
         const {textContent} = event.target.parentElement.children[1]    
         const arr = value.find(obj => obj.name === textContent)
@@ -35,6 +41,8 @@ export default function App(){
             }
         })
     }
+
+
     const allNames = value.map(name => <List 
         key={name.id}
         name={name.name}
@@ -43,6 +51,8 @@ export default function App(){
         hours={name.hours}
         minutes={name.minutes}
         />)
+
+        
     return (
         <form onSubmit={(event) => event.preventDefault()}>
             <h1>To-Do List</h1>
