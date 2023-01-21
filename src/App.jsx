@@ -15,7 +15,6 @@ export default function App(){
         setInputValue('')
         event.target.previousSibling.focus()
     }
-    console.log(value)
     function updateText(event) {
         setInputValue(event.target.value)
     }
