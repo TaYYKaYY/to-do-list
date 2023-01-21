@@ -2,6 +2,10 @@ import React from "react";
 import { useState } from "react";
 import List from "./components/List";
 
+
+// tomorrow work on localStorage and filtering completed listItems
+
+
 export default function App(){
     const [value, setValue] = useState([])
     const [inputValue, setInputValue] = useState('')
