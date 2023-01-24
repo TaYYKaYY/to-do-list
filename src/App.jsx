@@ -33,8 +33,8 @@ export default function App(){
 
 
     function deleteItem(event) {
-        const {textContent} = event.target.parentElement.children[1]    
-        const arr = value.find(obj => obj.name === textContent)
+        const {id} = event.target.parentElement.children[1]
+        const arr = value.find(obj => obj.id === parseInt(id))
         value.forEach(item => {
             if (item === arr){
                 const index = value.findIndex(e => e === item)
@@ -53,6 +53,7 @@ export default function App(){
         click={deleteItem}
         hours={name.hours}
         minutes={name.minutes}
+        list={value}
         />)
 
         
