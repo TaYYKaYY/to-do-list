@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import List from "./components/List";
 
@@ -7,7 +7,7 @@ import List from "./components/List";
 
 
 export default function App(){
-    const [value, setValue] = useState([])
+    const [value, setValue] = useState(JSON.parse(localStorage.getItem('main')) || [])
     const [inputValue, setInputValue] = useState('')
     function showText(event){
         const date = new Date()
@@ -55,7 +55,9 @@ export default function App(){
         minutes={name.minutes}
         list={value}
         />)
-
+        useEffect(() =>{
+            localStorage.setItem('main', JSON.stringify(value))
+        }, [value])
         
     return (
         <form onSubmit={(event) => event.preventDefault()}>
@@ -70,9 +72,9 @@ export default function App(){
             </div>
             <div className="flex">
                 {value[0] ? 
-                 <ul>
-                        <li>{allNames}</li>    
-                    </ul> :
+                <ul>
+                    <li>{allNames}</li>    
+                </ul> :
                     <p>No Tasks Yet!</p>
              }
             </div>
