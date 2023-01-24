@@ -3,21 +3,25 @@ import { useState } from "react";
 import List from "./components/List";
 
 
-// tomorrow work on localStorage and filtering completed listItems
+// tomorrow work on localStorage
 
 
 export default function App(){
     const [value, setValue] = useState([])
     const [inputValue, setInputValue] = useState('')
-
-
     function showText(event){
         const date = new Date()
         let {value, name} = event.target.previousSibling
         if (value === ''){
             return
         }
-        setValue(prevValue => [...prevValue, {id: prevValue.length + 1, [name]: value, hours: date.getHours(), minutes:date.getMinutes()}])
+        setValue(prevValue => [...prevValue, {
+            id: prevValue.length + 1,
+            [name]: value,
+            hours: date.getHours(),
+            minutes:date.getMinutes(),
+            isChecked: false
+        }])
         setInputValue('')
         event.target.previousSibling.focus()
     }
@@ -41,7 +45,6 @@ export default function App(){
             }
         })
     }
-
 
     const allNames = value.map(name => <List 
         key={name.id}

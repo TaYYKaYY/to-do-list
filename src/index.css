@@ -13,7 +13,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px;
+    padding: 20px;
 }
 .list-item{
     display: flex;
@@ -23,7 +23,7 @@ body{
     border-bottom: 1px solid #C69749;
 }
 ul{
-    width: 80%;
+    width: 100%;
     list-style-type: none;
     margin-top: 20px;
     padding: 10px;
@@ -36,6 +36,7 @@ ul{
     margin-left: 5px;
     font-size: 1.5em;
     font-weight: bold;
+    cursor: pointer;
 }
 .checked{
     text-decoration: line-through;
@@ -54,13 +55,6 @@ button{
 }
 .delete-btn:hover{
     transform: translateY(-3px);
-}
-.check-btn{
-    color: green;
-    background-color: transparent;
-    border: none;
-    font-size: 1.3em;
-    margin-right: 10px;
 }
 .time{
     margin-left: 5px
@@ -95,4 +89,16 @@ input{
 }
 input[type="checkbox"]{
     width: 20px;
+    cursor: pointer;
+}
+.completion{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: .2s;
+}
+h1{
+    letter-spacing: -.04em;
 }
