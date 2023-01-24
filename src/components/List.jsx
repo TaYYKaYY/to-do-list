@@ -8,7 +8,6 @@ export default function List(props) {
     return (
         <div>
             <div className="list-item">
-                {/* <input type="checkbox" id={props.id} checked={checked} onChange={check}/> */}
                 <div className="completion" onClick={check} style={{backgroundColor: checked ? 'green' : 'red'}}></div>
                 <p id={props.id} className={`list--name ${checked && 'checked'}`} onClick={check}>{props.name}</p>
                 <button onClick={props.click} className="delete-btn fa-solid fa-trash"></button>
