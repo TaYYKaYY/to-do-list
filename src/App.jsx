@@ -3,12 +3,24 @@ import { useState } from "react";
 import List from "./components/List";
 
 
-// tomorrow work on localStorage
-
-
 export default function App(){
     const [value, setValue] = useState(JSON.parse(localStorage.getItem('main')) || [])
     const [inputValue, setInputValue] = useState('')
+
+    function check(event) {
+        const {id} = event.target
+        const arr = value.find(obj => obj.id === parseInt(id))
+         value.forEach(item => {
+            if (item === arr){
+                setValue(prevValue => {
+                    item.isChecked = !item.isChecked
+                    return [...prevValue]
+                })
+            }
+        })
+    }
+
+
     function showText(event){
         const date = new Date()
         let {value, name} = event.target.previousSibling
@@ -45,20 +57,21 @@ export default function App(){
             }
         })
     }
-
-    const allNames = value.map(name => <List 
+    console.log(value)
+    const allNames = value.map(name => <List
         key={name.id}
         name={name.name}
         id={name.id}
         click={deleteItem}
+        checkClick={check}
         hours={name.hours}
         minutes={name.minutes}
-        list={value}
+        checked={name.isChecked}
         />)
         useEffect(() =>{
             localStorage.setItem('main', JSON.stringify(value))
         }, [value])
-        
+
     return (
         <form onSubmit={(event) => event.preventDefault()}>
             <h1>To-Do List</h1>
@@ -71,9 +84,9 @@ export default function App(){
                 {value.length > 0 && <p className="counter">You have {value.length} task{value.length > 1 ? 's' : ''}</p>}
             </div>
             <div className="flex">
-                {value[0] ? 
+                {value[0] ?
                 <ul>
-                    <li>{allNames}</li>    
+                    <li>{allNames}</li>
                 </ul> :
                     <p>No Tasks Yet!</p>
              }
