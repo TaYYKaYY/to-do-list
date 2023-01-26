@@ -1,9 +1,6 @@
 import React from "react";
 
 export default function List(props) {
-    const date = new Date()
-    let checkHour = date.getHours()
-    let checkMinutes = date.getMinutes()
     return (
         <div>
             <div className="list-item">

@@ -57,7 +57,8 @@ export default function App(){
             }
         })
     }
-    console.log(value)
+
+    
     const allNames = value.map(name => <List
         key={name.id}
         name={name.name}
