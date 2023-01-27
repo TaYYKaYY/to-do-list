@@ -13,7 +13,7 @@ body{
 .main-wrap{
     display: grid;
     place-items: center;
-    height:100vh;
+    height: calc(993px - 100vh);
 }
 form{
     background-color: #0F4C75;
@@ -61,9 +61,17 @@ input{
     font-size: 1.2em;
     padding-left: 3px;
 }
-/* .task-counter{
-    margin-left: auto;
-} */
+.task-counter{
+    margin-right: auto;
+}
+.counts{
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+.counts > p{
+    text-align: left;
+}
 button{
     cursor: pointer;
 }
@@ -98,14 +106,9 @@ button{
     text-transform: uppercase;
     letter-spacing: .1em;
 }
-.upper-btn:hover{
-    background-color: #1B262C;
-    border: 1px solid #1B262C;
-}
 .selector{
-    margin-right: 10px;
     margin-left: auto;
-    width: 15%;
+    width: 20%;
     background-color: #1B262C;
     color: white;
     border: none;
@@ -114,4 +117,39 @@ button{
     border-radius: 5px;
     font-size: 1.1em;
     text-transform: uppercase;
+}
+
+@media all and (max-width: 600px){
+    .events{
+        width: 250px
+    }
+    form{
+        width: 100%;
+        padding: 30px 10px;
+    }
+    .list-item{
+        font-size: 1em;
+    }
+    .upper-btn{
+        font-size: .5em;
+    }
+    .selector{
+        font-size: .5em;
+    }
+    input{
+        font-size: 1em;
+    }
+    .time{
+        font-size: .5em;
+    }
+    .completion{
+        width: 10px;
+        height: 10px;
+    }
+}
+@media all and (min-width: 800px){
+    .upper-btn:hover{
+        background-color: #1B262C;
+        border: 1px solid #1B262C;
+    }
 }

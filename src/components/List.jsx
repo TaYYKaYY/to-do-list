@@ -1,6 +1,8 @@
 import React from "react";
 
 export default function List(props) {
+    let date = new Date()
+    console.log(date.getDate())
     return (
         <div>
             <div className="list-item">

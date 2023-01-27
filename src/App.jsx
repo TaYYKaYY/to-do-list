@@ -8,6 +8,9 @@ export default function App(){
     const [inputValue, setInputValue] = useState('')
     const [filter, setFilter] = useState('all')
 
+    let completedArr = value.filter(obj => obj.isChecked)
+        let uncompletedArr = value.filter(obj => !obj.isChecked)
+    
     function check(event) {
         const {id} = event.target
         const arr = value.find(obj => obj.id === parseInt(id))
@@ -58,12 +61,10 @@ export default function App(){
         })
     }
 
-
     function handleChange(event){
         const {value} = event.target
         setFilter(value)
     }
-
 
     const allNames = value.map(name => <List
         key={name.id}
@@ -78,25 +79,40 @@ export default function App(){
         useEffect(() =>{
             localStorage.setItem('main', JSON.stringify(value))
         }, [value])
-        
-         let completedArr = []
-         value.map(obj => {
-            if (obj.isChecked){
-                completedArr.push(obj)
-            }
-        })
 
 
-        const filteredNames = completedArr.map(item => <List
-            key={item.id}
-            name={item.name}
-            id={item.id}
-            click={deleteItem}
-            checkClick={check}
-            hours={item.hours}
-            minutes={item.minutes}
-            checked={item.isChecked}
+    const completedNames = completedArr.map(item => <List
+        key={item.id}
+        name={item.name}
+        id={item.id}
+        click={deleteItem}
+        checkClick={check}
+        hours={item.hours}
+        minutes={item.minutes}
+        checked={item.isChecked}
+        />)
+    const uncompletedNames = uncompletedArr.map(item => <List
+        key={item.id}
+        name={item.name}
+        id={item.id}
+        click={deleteItem}
+        checkClick={check}
+        hours={item.hours}
+        minutes={item.minutes}
+        checked={item.isChecked}
             />)
+    
+
+    let filterDecider;
+        if (filter === 'completed'){
+            filterDecider = completedNames
+        }else if (filter === 'all'){
+            filterDecider = allNames
+        }else{
+            filterDecider = uncompletedNames
+        }
+
+
     return (
         <div>
             <h1>To-Do List</h1>
@@ -111,18 +127,23 @@ export default function App(){
                     <select className="selector" name="filter" onChange={handleChange}>
                         <option value="all">all</option>
                         <option value="completed">completed</option>
+                        <option value="uncompleted">uncompleted</option>
                     </select>
-                    <p className="task-counter">{value.length > 0 ? `You have ${value.length} task${value.length > 1 ? 's' : '' }` : "No tasks yet!"}</p>
                 </div>
                 <div className="flex">
                     {value[0] ?
                     <ul>
-                        <li>{filter === 'completed' ? filteredNames : allNames}</li>
-                        <p>{filter === 'completed' && filteredNames.length === 0 ? "No completed tasks" : ''}</p>
+                        <li>{filterDecider}</li>
+                        <p>{filter === 'completed' && completedNames.length === 0 ? "No completed tasks" : ''}</p>
+                        <p>{filter === 'uncompleted' && uncompletedNames.length === 0 ? "No uncompleted tasks" : ''}</p>
                     </ul> :
                     undefined
                     }
                 </div>
+            <div className="counts">
+                <p className="task-counter">{value.length > 0 ? `You have ${value.length} task${value.length > 1 ? 's' : '' }` : "No tasks yet!"}</p>
+                {value.length > 1 && <p className="task-counter__filtered">completed: {completedNames.length} <br></br>uncompleted: {uncompletedArr.length}</p>}
+            </div>
             </form>
         </div>
         </div>
