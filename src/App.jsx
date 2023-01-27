@@ -6,6 +6,7 @@ import List from "./components/List";
 export default function App(){
     const [value, setValue] = useState(JSON.parse(localStorage.getItem('main')) || [])
     const [inputValue, setInputValue] = useState('')
+    const [filter, setFilter] = useState('all')
 
     function check(event) {
         const {id} = event.target
@@ -20,7 +21,6 @@ export default function App(){
         })
     }
 
-
     function showText(event){
         const date = new Date()
         let {value, name} = event.target.previousSibling
@@ -32,7 +32,7 @@ export default function App(){
             [name]: value,
             hours: date.getHours(),
             minutes:date.getMinutes(),
-            isChecked: false
+            isChecked: false,
         }])
         setInputValue('')
         event.target.previousSibling.focus()
@@ -58,7 +58,13 @@ export default function App(){
         })
     }
 
-    
+
+    function handleChange(event){
+        const {value} = event.target
+        setFilter(value)
+    }
+
+
     const allNames = value.map(name => <List
         key={name.id}
         name={name.name}
@@ -72,26 +78,53 @@ export default function App(){
         useEffect(() =>{
             localStorage.setItem('main', JSON.stringify(value))
         }, [value])
+        
+         let completedArr = []
+         value.map(obj => {
+            if (obj.isChecked){
+                completedArr.push(obj)
+            }
+        })
 
+
+        const filteredNames = completedArr.map(item => <List
+            key={item.id}
+            name={item.name}
+            id={item.id}
+            click={deleteItem}
+            checkClick={check}
+            hours={item.hours}
+            minutes={item.minutes}
+            checked={item.isChecked}
+            />)
     return (
-        <form onSubmit={(event) => event.preventDefault()}>
+        <div>
             <h1>To-Do List</h1>
-            <div className="upper">
-                <div>
-                    <input type="text" name="name" value={inputValue} onChange={updateText} placeholder="Tasks..." autoFocus/>
-                    <button className="upper-btn fa-solid fa-plus" onClick={showText} type="submit"></button>
-                    {value.length > 0 && <button className="upper-btn clear" onClick={() => setValue([])}>clear all</button>}
+        <div className="main-wrap">
+            <form onSubmit={(event) => event.preventDefault()}>
+                <div className="upper">
+                    <div className="events">
+                        <input type="text" name="name" value={inputValue} onChange={updateText} placeholder="Tasks..." autoFocus/>
+                        <button className="upper-btn fa-solid fa-plus" onClick={showText} type="submit"></button>
+                        {value.length > 0 && <button className="upper-btn clear" onClick={() => setValue([])}>clear</button>}
+                    </div>
+                    <select className="selector" name="filter" onChange={handleChange}>
+                        <option value="all">all</option>
+                        <option value="completed">completed</option>
+                    </select>
+                    <p className="task-counter">{value.length > 0 ? `You have ${value.length} task${value.length > 1 ? 's' : '' }` : "No tasks yet!"}</p>
                 </div>
-                {value.length > 0 && <p className="counter">You have {value.length} task{value.length > 1 ? 's' : ''}</p>}
-            </div>
-            <div className="flex">
-                {value[0] ?
-                <ul>
-                    <li>{allNames}</li>
-                </ul> :
-                    <p>No Tasks Yet!</p>
-             }
-            </div>
-        </form>
+                <div className="flex">
+                    {value[0] ?
+                    <ul>
+                        <li>{filter === 'completed' ? filteredNames : allNames}</li>
+                        <p>{filter === 'completed' && filteredNames.length === 0 ? "No completed tasks" : ''}</p>
+                    </ul> :
+                    undefined
+                    }
+                </div>
+            </form>
+        </div>
+        </div>
     )
 }
