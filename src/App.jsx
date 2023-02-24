@@ -4,7 +4,7 @@ import List from "./components/List";
 
 
 export default function App(){
-    const [value, setValue] = useState(JSON.parse(localStorage.getItem('main')) || [])
+    const [value, setValue] = useState(JSON.parse(() => localStorage.getItem('main')) || [])
     const [inputValue, setInputValue] = useState('')
     const [filter, setFilter] = useState('all')
 
